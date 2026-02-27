@@ -33,3 +33,13 @@ body {
 .perspective-mockup:hover {
   transform: perspective(1500px) rotateY(-18deg) rotateX(4deg) scale(1.12);
 }
+
+.login-gradient {
+  background: linear-gradient(135deg, #0F62FE 0%, #001D3D 100%);
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
