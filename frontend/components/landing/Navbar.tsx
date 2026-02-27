@@ -1,116 +1,71 @@
-'use client';
-
-import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { FiMenu, FiX } from 'react-icons/fi';
+import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const navbarRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   return (
-    <nav
-      ref={navbarRef}
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/80 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-6'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="relative w-8 h-8">
-              <Image
-                src="/images/logo.png"
-                alt="FinAR"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <span className="font-semibold text-xl text-gray-900">FinAR</span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {['Inicio', 'Características', 'Precios', 'Blog'].map((item) => (
-              <Link
-                key={item}
-                href="#"
-                className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
-              >
-                {item}
-              </Link>
-            ))}
+    <nav className="fixed top-0 w-full z-[100] px-4 sm:px-6 lg:px-8 py-4">
+      {/* Fondo borroso - Glass effect */}
+      <div className="absolute inset-0 bg-white/80 backdrop-blur-md border-b border-white/20 shadow-sm"></div>
+      
+      {/* Contenido del navbar */}
+      <div className="relative max-w-7xl mx-auto flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="size-10 bg-navy rounded-xl overflow-hidden flex items-center justify-center transition-transform group-hover:scale-105 shadow-lg shadow-navy/20">
+            <Image 
+              src="/images/logo.png"
+              alt="finAR Logo"
+              width={40}
+              height={40}
+              className="object-contain"
+              priority
+            />
           </div>
+          <span className="text-navy text-2xl font-extrabold tracking-tight group-hover:text-primary transition-colors">
+            finAR
+          </span>
+        </Link>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-4">
-            <button className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
-              Iniciar sesión
-            </button>
-            <button className="px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors">
-              Registrarse
-            </button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-gray-600"
+        {/* Navegación central - Desktop */}
+        <div className="hidden md:flex items-center gap-8 lg:gap-12">
+          <Link 
+            href="#caracteristicas" 
+            className="text-sm font-bold text-navy/70 hover:text-primary transition-colors relative py-2 group"
           >
-            {mobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+            Características
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+          </Link>
+          <Link 
+            href="#soluciones" 
+            className="text-sm font-bold text-navy/70 hover:text-primary transition-colors relative py-2 group"
+          >
+            Soluciones
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+          </Link>
+          <Link 
+            href="#precios" 
+            className="text-sm font-bold text-navy/70 hover:text-primary transition-colors relative py-2 group"
+          >
+            Precios
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+          </Link>
+        </div>
+
+        {/* Botones de acción */}
+        <div className="flex items-center gap-4 sm:gap-6">
+          <button className="hidden sm:block text-sm font-bold text-navy hover:text-primary transition-colors">
+            Ingresar
+          </button>
+          <button className="bg-navy text-white text-sm font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full hover:bg-primary transition-all shadow-xl shadow-navy/20 hover:shadow-primary/30 hover:scale-105 active:scale-95">
+            Empezar
+          </button>
+          
+          {/* Botón menú móvil - Podemos implementar después si es necesario */}
+          <button className="md:hidden size-10 rounded-full bg-navy/5 flex items-center justify-center hover:bg-navy/10 transition-colors">
+            <span className="material-symbols-outlined text-navy">menu</span>
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 transition-all duration-300 ${
-          mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-      >
-        <div className="px-6 py-4 space-y-3">
-          {['Inicio', 'Características', 'Precios', 'Blog'].map((item) => (
-            <Link
-              key={item}
-              href="#"
-              className="block py-2 text-gray-600 hover:text-gray-900"
-            >
-              {item}
-            </Link>
-          ))}
-          <div className="pt-4 border-t border-gray-100">
-            <button className="w-full py-2 text-gray-600 hover:text-gray-900">
-              Iniciar sesión
-            </button>
-            <button className="w-full mt-2 px-5 py-2.5 bg-gray-900 text-white rounded-lg">
-              Registrarse
-            </button>
-          </div>
-        </div>
-      </div>
     </nav>
-  );
+  )
 }

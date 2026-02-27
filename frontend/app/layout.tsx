@@ -1,13 +1,9 @@
-// layout.tsx (para completar la estructura)
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata: Metadata = {
-  title: 'FinAR - Controla tus finanzas personales',
-  description: 'La forma más inteligente de llevar tus gastos y ahorros',
+  title: 'finAR - Domina tus finanzas personales',
+  description: 'La plataforma todo-en-uno que utiliza inteligencia artificial para sincronizar tus cuentas',
 }
 
 export default function RootLayout({
@@ -17,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className={inter.className}>{children}</body>
+      <body className="overflow-x-hidden antialiased">{children}</body>
     </html>
   )
 }

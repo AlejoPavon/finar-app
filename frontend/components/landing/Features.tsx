@@ -1,46 +1,39 @@
-import { BsGraphUp, BsPiggyBank, BsBarChart } from 'react-icons/bs';
-
-const features = [
-  {
-    icon: BsGraphUp,
-    title: "Control de gastos",
-    description: "Registra y categoriza tus gastos de forma intuitiva"
-  },
-  {
-    icon: BsPiggyBank,
-    title: "Metas de ahorro",
-    description: "Establece objetivos y sigue tu progreso fácilmente"
-  },
-  {
-    icon: BsBarChart,
-    title: "Estadísticas claras",
-    description: "Visualiza tus finanzas con gráficos simples"
-  }
-];
-
 export default function Features() {
-  return (
-    <section className="py-20 px-6 bg-gray-50">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-light text-gray-900 mb-4">
-            Todo lo necesario en un solo lugar
-          </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto">
-            Funcionalidades simples pero poderosas para gestionar tu dinero
-          </p>
-        </div>
+  const features = [
+    {
+      icon: 'verified_user',
+      title: 'Seguridad Bancaria',
+      description: 'Encriptación de nivel militar 256-bit para proteger cada dato.'
+    },
+    {
+      icon: 'sync_saved_locally',
+      title: 'Sincronización Total',
+      description: 'Conecta todos tus bancos y billeteras digitales en tiempo real.'
+    },
+    {
+      icon: 'neurology',
+      title: 'IA Predictiva',
+      description: 'Proyecciones inteligentes de tus gastos basadas en hábitos.'
+    }
+  ]
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {features.map((feature, i) => (
-            <div key={i} className="bg-white p-8 rounded-xl border border-gray-100 hover:shadow-sm transition-shadow">
-              <feature.icon className="w-10 h-10 text-gray-700 mb-5" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">{feature.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{feature.description}</p>
+  return (
+    <section className="py-12 bg-white border-y border-slate-100">
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {features.map((feature, index) => (
+            <div key={index} className="glass-badge p-6 rounded-3xl flex items-start gap-5">
+              <div className="size-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined">{feature.icon}</span>
+              </div>
+              <div>
+                <h3 className="font-bold text-navy text-lg mb-1">{feature.title}</h3>
+                <p className="text-sm text-slate-500">{feature.description}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }
