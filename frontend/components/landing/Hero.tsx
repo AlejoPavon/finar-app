@@ -56,13 +56,10 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <button className="w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-5 bg-primary text-white font-bold rounded-2xl shadow-2xl shadow-primary/30 hover:bg-blue-700 transition-all hover:translate-y-[-2px] hover:shadow-2xl hover:shadow-primary/40 active:translate-y-0 flex items-center justify-center gap-2 group">
               <span>Comenzar Gratis</span>
-              <FiZap className="text-xl group-hover:translate-x-1 transition-transform" />
+              
             </button>
             
-            <button className="w-full sm:w-auto px-8 lg:px-10 py-4 lg:py-5 bg-transparent text-navy font-bold rounded-2xl border-2 border-navy/10 hover:border-navy hover:bg-navy/5 transition-all flex items-center justify-center gap-3 group">
-              <FiPlayCircle className="text-2xl text-primary group-hover:scale-110 transition-transform" />
-              <span>Ver Video</span>
-            </button>
+            
           </div>
         </div>
         

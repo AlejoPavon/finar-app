@@ -1,4 +1,4 @@
-// Footer.tsx - Versión corregida sin FiCookie
+// Footer.tsx - Con año actual
 import Link from 'next/link'
 import Image from 'next/image'
 import { 
@@ -12,7 +12,7 @@ import {
   FiCode,
   FiLock,
   FiFileText,
-  FiSettings, // Reemplazo FiCookie por FiSettings
+  FiSettings,
   FiCheckCircle
 } from 'react-icons/fi'
 import { 
@@ -20,6 +20,8 @@ import {
 } from 'react-icons/md'
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear()
+
   return (
     <footer className="bg-navy text-white pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-8">
@@ -90,7 +92,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="#" className="hover:text-primary transition-colors flex items-center gap-3">
-                  <FiSettings className="text-sm" /> {/* Cambiado FiCookie por FiSettings */}
+                  <FiSettings className="text-sm" />
                   Cookies
                 </Link>
               </li>
@@ -112,7 +114,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <FiMapPin className="text-sm text-primary" />
-                Madrid, España
+                Argentina, Mendoza
               </li>
               <li className="pt-4 flex gap-4">
                 <Link href="#" className="size-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-colors">
@@ -127,7 +129,9 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-white/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-slate-500 text-xs font-medium">© 2024 finAR Technologies. Todos los derechos reservados.</p>
+          <p className="text-slate-500 text-xs font-medium">
+            © {currentYear} finAR Technologies. Todos los derechos reservados.
+          </p>
           <div className="flex items-center gap-8">
             <Link href="#" className="text-slate-500 hover:text-white text-xs transition-colors">Status</Link>
             <Link href="#" className="text-slate-500 hover:text-white text-xs transition-colors">Soporte</Link>

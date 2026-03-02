@@ -1,10 +1,11 @@
-// Testimonials.tsx - Versión minimalista y moderna
+// Testimonials.tsx - Versión mejorada
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { MdVerified } from 'react-icons/md'
 import { FiChevronLeft, FiChevronRight, FiStar } from 'react-icons/fi'
 import { BiMessageAlt } from 'react-icons/bi'
+import { HiOutlineUserCircle } from 'react-icons/hi'
 
 const testimonials = [
   {
@@ -57,10 +58,20 @@ const testimonials = [
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [direction, setDirection] = useState<'left' | 'right'>('right')
+  const sectionRef = useRef<HTMLElement>(null)
 
   const nextSlide = useCallback(() => {
+    setDirection('right')
     setCurrentIndex((prevIndex) => 
       prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+    )
+  }, [])
+
+  const previousSlide = useCallback(() => {
+    setDirection('left')
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
     )
   }, [])
 
@@ -71,93 +82,112 @@ export default function Testimonials() {
     return () => clearInterval(interval)
   }, [isAutoPlaying, nextSlide])
 
-  // Pausar al hacer hover
-  const handleMouseEnter = () => setIsAutoPlaying(false)
-  const handleMouseLeave = () => setIsAutoPlaying(true)
+  // Pausar autoplay cuando el usuario no está viendo la sección
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsAutoPlaying(true)
+        } else {
+          setIsAutoPlaying(false)
+        }
+      },
+      { threshold: 0.3 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <section ref={sectionRef} className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-6xl mx-auto">
-        {/* Encabezado minimalista */}
+        {/* Encabezado minimalista con línea decorativa */}
         <div className="text-center mb-16">
-          <span className="text-sm font-semibold text-primary uppercase tracking-wider">
-            Testimonios
-          </span>
-          <h2 className="text-3xl md:text-4xl font-light text-navy mt-3 mb-4">
-            Lo que dicen de <span className="font-semibold">finAR</span>
+
+          <h2 className="text-3xl md:text-4xl font-light text-navy mb-3">
+            Lo que dicen nuestros <span className="font-semibold text-primary">usuarios</span>
           </h2>
           <p className="text-slate-400 text-sm max-w-xl mx-auto">
-            Únete a miles de personas que ya están simplificando sus finanzas
+            Únete a miles de personas que ya están transformando sus finanzas
           </p>
         </div>
 
-        {/* Carrusel minimalista */}
-        <div 
-          className="relative"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {/* Controles - sutiles */}
+        {/* Carrusel principal */}
+        <div className="relative px-4 md:px-12">
+          {/* Controles de navegación - solo visibles en desktop */}
+          <button
+            onClick={previousSlide}
+            onMouseEnter={() => setIsAutoPlaying(false)}
+            onMouseLeave={() => setIsAutoPlaying(true)}
+            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 size-10 rounded-full bg-white border border-slate-200 shadow-sm items-center justify-center hover:border-primary hover:text-primary transition-all z-10"
+            aria-label="Testimonio anterior"
+          >
+            <FiChevronLeft className="text-lg" />
+          </button>
+          
           <button
             onClick={nextSlide}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 size-10 rounded-full bg-white shadow-md flex items-center justify-center hover:shadow-lg transition-all z-10 border border-slate-100"
-            aria-label="Siguiente"
+            onMouseEnter={() => setIsAutoPlaying(false)}
+            onMouseLeave={() => setIsAutoPlaying(true)}
+            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 size-10 rounded-full bg-white border border-slate-200 shadow-sm items-center justify-center hover:border-primary hover:text-primary transition-all z-10"
+            aria-label="Siguiente testimonio"
           >
-            <FiChevronRight className="text-navy text-lg" />
+            <FiChevronRight className="text-lg" />
           </button>
 
-          <button
-            onClick={() => {
-              setCurrentIndex((prevIndex) => 
-                prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-              )
-              setIsAutoPlaying(false)
-              setTimeout(() => setIsAutoPlaying(true), 10000)
-            }}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 size-10 rounded-full bg-white shadow-md flex items-center justify-center hover:shadow-lg transition-all z-10 border border-slate-100"
-            aria-label="Anterior"
-          >
-            <FiChevronLeft className="text-navy text-lg" />
-          </button>
-
-          {/* Carrusel */}
+          {/* Contenedor del carrusel */}
           <div className="overflow-hidden">
             <div 
               className="flex transition-transform duration-700 ease-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {testimonials.map((testimonial) => (
-                <div key={testimonial.id} className="w-full flex-shrink-0 px-8 md:px-12">
+                <div key={testimonial.id} className="w-full flex-shrink-0">
                   <div className="max-w-3xl mx-auto">
-                    {/* Testimonio card - minimalista */}
-                    <div className="text-center">
-                      {/* Nombre del usuario - ARRIBA */}
-                      <div className="flex items-center justify-center gap-2 mb-6">
-                        <span className="text-2xl font-medium text-navy">
-                          {testimonial.name}
-                        </span>
-                        {testimonial.verified && (
-                          <MdVerified className="text-green-500 text-xl" />
-                        )}
-                      </div>
-                      
-                      {/* Role y fecha - sutil */}
-                      <div className="flex items-center justify-center gap-3 text-sm text-slate-400 mb-8">
-                        <span>{testimonial.role}</span>
-                        <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-                        <span>{testimonial.date}</span>
+                    {/* Tarjeta de testimonio */}
+                    <div className="bg-white rounded-3xl p-8 md:p-10 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                      {/* Nombre y verificación - ARRIBA */}
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-3">
+                          <div className="size-12 rounded-full bg-gradient-to-br from-primary/5 to-blue-500/5 flex items-center justify-center border border-slate-200">
+                            <HiOutlineUserCircle className="text-2xl text-navy/40" />
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h3 className="font-semibold text-navy">
+                                {testimonial.name}
+                              </h3>
+                              {testimonial.verified && (
+                                <MdVerified className="text-green-500 text-sm" />
+                              )}
+                            </div>
+                            <p className="text-xs text-slate-400">{testimonial.role}</p>
+                          </div>
+                        </div>
+                        
+                        {/* Rating */}
+                        <div className="flex gap-1">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <FiStar key={i} className="text-yellow-400 fill-current text-sm" />
+                          ))}
+                        </div>
                       </div>
 
-                      {/* Contenido - más prominente */}
-                      <p className="text-xl md:text-2xl text-navy/80 font-light leading-relaxed mb-8">
-                        "{testimonial.content}"
-                      </p>
+                      {/* Contenido del testimonio */}
+                      <div className="relative">
+                        <BiMessageAlt className="absolute -top-2 -left-2 text-4xl text-primary/5" />
+                        <p className="text-navy/70 text-base md:text-lg font-light leading-relaxed pl-6">
+                          "{testimonial.content}"
+                        </p>
+                      </div>
 
-                      {/* Rating - minimal */}
-                      <div className="flex justify-center gap-1.5">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <FiStar key={i} className="text-yellow-400 fill-current text-lg" />
-                        ))}
+                      {/* Fecha */}
+                      <div className="mt-6 flex justify-end">
+                        <span className="text-xs text-slate-300">{testimonial.date}</span>
                       </div>
                     </div>
                   </div>
@@ -166,68 +196,48 @@ export default function Testimonials() {
             </div>
           </div>
 
-          {/* Indicadores - minimalistas */}
-          <div className="flex justify-center gap-2 mt-12">
+          {/* Indicadores de posición */}
+          <div className="flex items-center justify-center gap-3 mt-10">
             {testimonials.map((_, index) => (
               <button
                 key={index}
                 onClick={() => {
+                  setDirection(index > currentIndex ? 'right' : 'left')
                   setCurrentIndex(index)
                   setIsAutoPlaying(false)
-                  setTimeout(() => setIsAutoPlaying(true), 10000)
+                  setTimeout(() => setIsAutoPlaying(true), 8000)
                 }}
-                className={`transition-all ${
+                className={`transition-all duration-300 ${
                   index === currentIndex 
-                    ? 'w-8 h-1.5 bg-navy' 
-                    : 'w-1.5 h-1.5 bg-slate-200 hover:bg-slate-300 rounded-full'
+                    ? 'w-8 h-2 bg-primary rounded-full' 
+                    : 'w-2 h-2 bg-slate-200 rounded-full hover:bg-slate-300'
                 }`}
-                aria-label={`Ir a testimonio ${index + 1}`}
+                aria-label={`Ir al testimonio ${index + 1}`}
               />
             ))}
           </div>
 
-          {/* Indicador de autoplay sutil */}
-          <div className="flex justify-center mt-4">
-            <div className="flex gap-1">
-              {testimonials.map((_, index) => (
-                <div
-                  key={index}
-                  className="w-12 h-0.5 bg-slate-100 rounded-full overflow-hidden"
-                >
-                  {index === currentIndex && isAutoPlaying && (
-                    <div 
-                      className="h-full bg-navy/20 animate-[progress_5s_linear]"
-                    />
-                  )}
-                </div>
-              ))}
+          {/* Barra de progreso de autoplay */}
+          {isAutoPlaying && (
+            <div className="flex justify-center mt-6">
+              <div className="w-48 h-0.5 bg-slate-100 rounded-full overflow-hidden">
+                <div 
+                  key={currentIndex}
+                  className="h-full bg-primary/30 rounded-full animate-[progress_5s_linear]"
+                  style={{ width: '100%' }}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
-        {/* Estadísticas - muy sutiles */}
-        <div className="flex justify-center gap-12 mt-16 pt-8 border-t border-slate-100">
-          <div className="text-center">
-            <div className="text-2xl font-light text-navy">4.9</div>
-            <div className="text-xs text-slate-400 mt-1">Calificación</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-light text-navy">+50K</div>
-            <div className="text-xs text-slate-400 mt-1">Usuarios</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-light text-navy">98%</div>
-            <div className="text-xs text-slate-400 mt-1">Recomiendan</div>
-          </div>
-        </div>
+        <style jsx>{`
+          @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+          }
+        `}</style>
       </div>
-
-      <style jsx>{`
-        @keyframes progress {
-          0% { width: 0%; }
-          100% { width: 100%; }
-        }
-      `}</style>
     </section>
   )
 }
