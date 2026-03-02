@@ -1,8 +1,9 @@
+// SocialButtons.tsx - Corregido
 'use client'
 
 import { FcGoogle } from 'react-icons/fc'
 import { FaApple } from 'react-icons/fa'
-import { Link } from 'lucide-react'
+import Link from 'next/link'
 
 export default function SocialButtons() {
   const handleGoogleLogin = () => {
@@ -38,7 +39,7 @@ export default function SocialButtons() {
       <p className="mt-12 text-center text-slate-500 text-sm font-medium">
         ¿Aún no tienes una cuenta?{' '}
         <Link 
-          href="/registro" 
+          href="/sign-up" 
           className="text-primary font-bold hover:underline ml-1 hover:text-primary/80 transition-colors"
         >
           Regístrate gratis

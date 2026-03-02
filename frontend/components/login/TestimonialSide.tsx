@@ -1,3 +1,7 @@
+// TestimonialSide.tsx - Corregido
+import Image from 'next/image'
+import { FiShield, FiZap } from 'react-icons/fi'
+
 export default function TestimonialSide() {
   return (
     <div className="h-full login-gradient relative overflow-hidden flex items-center justify-center p-12">
@@ -10,8 +14,14 @@ export default function TestimonialSide() {
       <div className="relative z-10 max-w-lg text-center">
         {/* Logo grande */}
         <div className="flex flex-col items-center gap-6 mb-12">
-          <div className="size-20 bg-white flex items-center justify-center rounded-[2rem] shadow-2xl">
-            <span className="material-symbols-outlined text-primary text-[48px]">account_balance_wallet</span>
+          <div className="size-20 bg-white rounded-[2rem] shadow-2xl overflow-hidden p-4">
+            <Image 
+              src="/images/logo.png"
+              alt="finAR Logo"
+              width={80}
+              height={80}
+              className="object-contain w-full h-full"
+            />
           </div>
           <span className="text-white text-5xl font-extrabold tracking-tighter">finAR</span>
         </div>
@@ -31,11 +41,11 @@ export default function TestimonialSide() {
         {/* Características destacadas */}
         <div className="grid grid-cols-2 gap-4 mt-16">
           <div className="glass-effect p-4 rounded-2xl">
-            <span className="material-symbols-outlined text-white mb-2 block">verified_user</span>
+            <FiShield className="text-white text-3xl mb-2 mx-auto" />
             <p className="text-white text-xs font-semibold">Seguridad Nivel Bancario</p>
           </div>
           <div className="glass-effect p-4 rounded-2xl">
-            <span className="material-symbols-outlined text-white mb-2 block">bolt</span>
+            <FiZap className="text-white text-3xl mb-2 mx-auto" />
             <p className="text-white text-xs font-semibold">Sincronización Real</p>
           </div>
         </div>
