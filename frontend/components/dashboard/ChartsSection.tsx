@@ -2,6 +2,7 @@
 'use client'
 
 import { useState } from 'react'
+import { FiTrendingUp, FiPieChart } from 'react-icons/fi'
 
 export default function ChartsSection() {
   const [selectedPeriod, setSelectedPeriod] = useState('6m')

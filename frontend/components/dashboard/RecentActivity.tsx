@@ -5,7 +5,7 @@ export default function RecentActivity() {
   const activities = [
     {
       id: 1,
-      icon: <BiShoppingBag className="text-slate-500 group-hover:text-primary" />,
+      icon: <BiShoppingBag className="text-slate-500 group-hover:text-primary text-xl" />,
       title: 'Apple Services',
       category: 'Suscripciones',
       time: 'Hoy',
@@ -13,7 +13,7 @@ export default function RecentActivity() {
     },
     {
       id: 2,
-      icon: <BiRestaurant className="text-slate-500 group-hover:text-primary" />,
+      icon: <BiRestaurant className="text-slate-500 group-hover:text-primary text-xl" />,
       title: 'Viento Sur Resto',
       category: 'Comida',
       time: 'Ayer',
