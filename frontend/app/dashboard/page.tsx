@@ -1,4 +1,14 @@
 // app/dashboard/page.tsx
+import { 
+  FiSearch, 
+  FiPlus, 
+  FiTrendingUp,
+  FiShoppingBag,
+  FiHome
+} from 'react-icons/fi'
+import { BiWallet, BiMoney, BiShoppingBag as BiShoppingBagIcon } from 'react-icons/bi'
+import { RiRestaurantLine } from 'react-icons/ri'
+
 export default function DashboardPage() {
   const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun']
   const currentMonth = 'Abr'
@@ -14,13 +24,13 @@ export default function DashboardPage() {
         <div className="flex items-center gap-6">
           {/* Search */}
           <div className="relative hidden xl:block">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-lg">search</span>
+            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
             <input className="pl-11 pr-6 py-2 bg-white border border-slate-200 rounded-full text-sm w-64 focus:ring-2 focus:ring-primary/20 focus:border-primary/40 outline-none transition-all" placeholder="Buscar..." type="text"/>
           </div>
           
           {/* Nueva Transacción Button */}
           <button className="flex items-center gap-2 bg-navy text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-slate-800 transition-all shadow-lg shadow-navy/10 group">
-            <span className="material-symbols-outlined text-lg group-hover:rotate-90 transition-transform">add</span>
+            <FiPlus className="text-lg group-hover:rotate-90 transition-transform" />
             Nueva Transacción
           </button>
           
@@ -39,11 +49,11 @@ export default function DashboardPage() {
           <div className="glass-card p-6 rounded-3xl">
             <div className="flex justify-between items-start mb-4">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Saldo Total</span>
-              <span className="material-symbols-outlined text-primary">account_balance_wallet</span>
+              <BiWallet className="text-primary text-2xl" />
             </div>
             <h4 className="text-3xl font-extrabold text-slate-900">$45,200.00</h4>
             <p className="text-emerald-500 text-[11px] font-bold mt-2 flex items-center gap-1">
-              <span className="material-symbols-outlined text-xs">trending_up</span> +2.5% mes anterior
+              <FiTrendingUp className="text-xs" /> +2.5% mes anterior
             </p>
           </div>
 
@@ -51,11 +61,11 @@ export default function DashboardPage() {
           <div className="glass-card p-6 rounded-3xl">
             <div className="flex justify-between items-start mb-4">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Gastos</span>
-              <span className="material-symbols-outlined text-rose-400">shopping_cart</span>
+              <BiShoppingBagIcon className="text-rose-400 text-2xl" />
             </div>
             <h4 className="text-3xl font-extrabold text-slate-900">$1,240.00</h4>
             <p className="text-rose-400 text-[11px] font-bold mt-2 flex items-center gap-1">
-              <span className="material-symbols-outlined text-xs">trending_up</span> +12.3% mes anterior
+              <FiTrendingUp className="text-xs" /> +12.3% mes anterior
             </p>
           </div>
 
@@ -63,11 +73,11 @@ export default function DashboardPage() {
           <div className="glass-card p-6 rounded-3xl">
             <div className="flex justify-between items-start mb-4">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Ingresos</span>
-              <span className="material-symbols-outlined text-emerald-400">payments</span>
+              <BiMoney className="text-emerald-400 text-2xl" />
             </div>
             <h4 className="text-3xl font-extrabold text-slate-900">$3,150.00</h4>
             <p className="text-emerald-400 text-[11px] font-bold mt-2 flex items-center gap-1">
-              <span className="material-symbols-outlined text-xs">trending_up</span> +8.0% mes anterior
+              <FiTrendingUp className="text-xs" /> +8.0% mes anterior
             </p>
           </div>
         </div>
@@ -173,7 +183,7 @@ export default function DashboardPage() {
             <div className="px-8 py-4 flex items-center justify-between hover:bg-white/80 transition-all group">
               <div className="flex items-center gap-4">
                 <div className="size-11 rounded-xl bg-slate-100 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                  <span className="material-symbols-outlined text-slate-500 group-hover:text-primary">shopping_bag</span>
+                  <FiShoppingBag className="text-slate-500 group-hover:text-primary text-xl" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-slate-800">Apple Services</p>
@@ -187,7 +197,7 @@ export default function DashboardPage() {
             <div className="px-8 py-4 flex items-center justify-between hover:bg-white/80 transition-all group">
               <div className="flex items-center gap-4">
                 <div className="size-11 rounded-xl bg-slate-100 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                  <span className="material-symbols-outlined text-slate-500 group-hover:text-primary">restaurant</span>
+                  <RiRestaurantLine className="text-slate-500 group-hover:text-primary text-xl" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-slate-800">Viento Sur Resto</p>
